@@ -1,1 +1,1 @@
-# RecipeCow Client
+# Chef Kirby Client

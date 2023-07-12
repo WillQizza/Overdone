@@ -1,11 +1,9 @@
 import express from "express";
+import routes from "./routes";
 
 import { WEBSITE_PORT } from "./config";
 
 const app = express();
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.use(routes);
 
 app.listen(WEBSITE_PORT);

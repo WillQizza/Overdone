@@ -1,1 +1,1 @@
-# RecipeCow Server
+# Chef Kirby Server

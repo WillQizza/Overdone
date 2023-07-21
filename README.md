@@ -7,4 +7,9 @@ Overdone allows you to share and store personal recipes that you might not want 
 
 ## Demo
 
-Due to the nature of user submitted content, you will be unable to register or submit recipes to the website, however, you are more than welcome to browse around the site at [cooking.willqi.dev](https://cooking.willqi.dev) and view any publicly available recipes or users.
+Due to the nature of user submitted content, you will be unable to register or submit recipes to the website, however, you are more than welcome to browse around the site at [cooking.willqi.dev](https://cooking.willqi.dev) and view any publicly available recipes or users. If you would like to access these restricted features, feel free to clone and follow the instructions below to host your own instance of Overdone.
+
+
+## Local Instance Guide
+
+Work in progress...

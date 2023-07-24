@@ -11,13 +11,20 @@ body {
 }
 
 #content {
-    width: 67%;
+    width: 62%;
+    height: min-content;
+    margin-top: 15%;
+    margin-left: 5%;
+
+    // TODO: Image should fade in and appear from bottom out of nowhere
     .title {
         font-size: 7em;
     }
     
+    // TODO: Fade in here be all I need (I think)
     .subtitle {
         font-size: 3em;
+        padding-left: 10px;
     }
     
     .heading {
@@ -26,13 +33,29 @@ body {
     }
 }
 
+// TODO: Make preview appear from left side with fade in for the image
 #cooking-preview {
     width: 33%;
     height: 100%;
+
+    .image {
+        position: absolute;
+        right: 0;
+        width: 33%;
+        height: 100%;
+        background-image: url("");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position-x: -250px;
+    }
+
     .overlay {
+        position: absolute;
+        right: 0;
         background-color: #000;
         opacity: 0.6;
-        width: 100%;
+        width: 33%;
         height: 100%;
+        z-index: 10;
     }
 }

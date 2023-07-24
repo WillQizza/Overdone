@@ -7,12 +7,13 @@ class LandingPage extends Component {
     return (
       <div id="container">
         <div id="content">
-          <h1 className="title heading">Overcooked</h1>
-          <h2 className="subtitle heading">Cooking has never been so organized!</h2>
+          <h1 className="title heading">Overdone</h1>
+          <h2 className="subtitle heading">Cooking has never felt so organized!</h2>
           <button>Login</button>
           <button>Browse</button>
         </div>
         <div id="cooking-preview">
+          <div className="image"></div>
           <div className="overlay"></div>
         </div>
       </div>

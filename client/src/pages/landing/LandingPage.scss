@@ -1,0 +1,38 @@
+@use "../common/Theme.scss";
+
+body {
+    background-color: Theme.$background;
+    font-family: 'Roboto', sans-serif;
+}
+
+#container {
+    height: 100%;
+    display: flex;
+}
+
+#content {
+    width: 67%;
+    .title {
+        font-size: 7em;
+    }
+    
+    .subtitle {
+        font-size: 3em;
+    }
+    
+    .heading {
+        font-weight: 100;
+        margin: 0;
+    }
+}
+
+#cooking-preview {
+    width: 33%;
+    height: 100%;
+    .overlay {
+        background-color: #000;
+        opacity: 0.6;
+        width: 100%;
+        height: 100%;
+    }
+}

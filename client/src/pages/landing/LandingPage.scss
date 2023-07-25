@@ -1,8 +1,10 @@
 @use "../common/Theme.scss";
+@use "../common/Animations.scss";
 
 body {
     background-color: Theme.$background;
     font-family: 'Roboto', sans-serif;
+    overflow-x: hidden;
 }
 
 #container {
@@ -16,15 +18,19 @@ body {
     margin-top: 15%;
     margin-left: 5%;
 
-    // TODO: Image should fade in and appear from bottom out of nowhere
     .title {
         font-size: 7em;
+        animation: fade-in 1s, transform-bottom 1s;
+        animation-fill-mode: forwards;
     }
     
-    // TODO: Fade in here be all I need (I think)
     .subtitle {
         font-size: 3em;
         padding-left: 10px;
+        animation: fade-in 2s;
+        animation-fill-mode: forwards;
+        animation-delay: 1s;
+        opacity: 0;
     }
     
     .heading {
@@ -33,7 +39,6 @@ body {
     }
 }
 
-// TODO: Make preview appear from left side with fade in for the image
 #cooking-preview {
     width: 33%;
     height: 100%;
@@ -47,6 +52,11 @@ body {
         background-repeat: no-repeat;
         background-size: cover;
         background-position-x: -250px;
+        opacity: 0;
+
+        animation: transform-right 2s, fade-in 4s;
+        animation-fill-mode: forwards;
+        animation-delay: 2s;
     }
 
     .overlay {
@@ -57,5 +67,10 @@ body {
         width: 33%;
         height: 100%;
         z-index: 10;
+        transform: translateX(100%);
+
+        animation: transform-right 2s;
+        animation-fill-mode: forwards;
+        animation-delay: 2s;
     }
 }

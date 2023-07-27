@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "gulp build",
     "start": "npm run build && node dist/app.js"
   },
   "keywords": [],
@@ -18,7 +18,12 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
+    "@types/gulp": "^4.0.13",
     "@types/node": "^20.4.1",
+    "del": "^6.1.1",
+    "gulp": "^4.0.2",
+    "gulp-typescript": "6.0.0-alpha.1",
+    "ts-node": "^10.9.1",
     "typescript": "^5.1.6"
   }
 }

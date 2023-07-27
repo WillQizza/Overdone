@@ -18,6 +18,10 @@ class LandingPage extends Component {
             <div className="image"></div>
             <div className="overlay"></div>
           </div>
+          <div id="signin-box">
+            <LoginForm />
+          </div>
+          <div id="container-overlay" className="hidden"></div>
         </div>
       </div>
     );

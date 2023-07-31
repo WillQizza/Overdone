@@ -6,6 +6,8 @@ CREATE TABLE users (
     PRIMARY KEY (id)
 );
 
+ALTER TABLE users ADD CONSTRAINT index_users_case_insensitive_username UNIQUE LOWER(username);
+
 CREATE TABLE recipes (
     id INT NOT NULL AUTO_INCREMENT,
     owner_id INT NOT NULL,

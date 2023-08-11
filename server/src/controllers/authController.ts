@@ -1,34 +1,56 @@
 import { Request, Response } from "express";
+import { genSalt, hash, compare } from "bcrypt";
 
 import { getConnection } from "../database";
-import { hasPayload, respondWithError } from "../utils";
+import { hasPayload, logError, respondWithError, respondWithSuccess } from "../utils";
 import { APIAuthenticationRetrievePayload } from "overdone-common";
+import { RowDataPacket } from "mysql2";
 
-export async function onTokenRegister(req : Request, res : Response) {
-  const connection = await getConnection();
-  try {
-    
-  } finally {
-    connection.release();
-  }
+interface AuthorizeDataRowPacket extends RowDataPacket {
+  userId: number;
+  passwordHash: string;
 }
 
-export async function onTokenAuthorize(req : Request, res : Response) {
+export async function onLogin(req : Request, res : Response) {
   if (!hasPayload(req.body, { username: "string", password: "string" })) {
     return respondWithError(res, "Missing properties");
   }
-  
-  const { username, password } : APIAuthenticationRetrievePayload = req.body;
 
   const connection = await getConnection();
   try {
-    const [ data ] = await connection.query("SELECT user_id, password_hash FROM `users` WHERE LOWER(username) = LOWER(?)", [ username ]);
-    console.log(data);
+    const { username, password } : APIAuthenticationRetrievePayload = req.body;
+    const [ [ { userId, passwordHash } ] ] = await connection.query<AuthorizeDataRowPacket[]>("SELECT user_id AS userId, password_hash AS passwordHash FROM `users` WHERE LOWER(username) = LOWER(?)", [ username ]);
+    
+    if (!req.headers["user-agent"]) {
+      return respondWithError(res, "Invalid request");
+    }
+
+    const isSamePassword = await compare(password, passwordHash);
+    if (!isSamePassword) {
+      return respondWithError(res, "Invalid credentials", 401);
+    }
+
+    req.session["userId"] = userId;
+    req.session["userAgent"] = req.headers["user-agent"];
+
+    return respondWithSuccess(res, {});
   } finally {
     connection.release();
   }
 }
 
-export function onTokenRevoke(req : Request, res : Response) {
-  
+export function onLogout(req : Request, res : Response) {
+  if (!req.session["userId"]) {
+    return respondWithError(res, "Not authenticated", 401);
+  }
+
+  req.session.destroy(err => {
+    if (err != null) {
+      logError("An error occurred while attempting to destroy a session.", err);
+      respondWithError(res, "Internal Error", 500);
+      return;
+    }
+    
+    respondWithSuccess(res, {});
+  });
 }

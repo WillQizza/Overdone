@@ -1,8 +1,10 @@
 import * as path from "path";
 import * as fs from "fs";
 
+import { genSalt, hash } from "bcrypt";
 import { RowDataPacket, createConnection, createPool } from "mysql2/promise";
-import { DATABASE_HOST, DATABASE_NAME, DATABASE_PASSWORD, DATABASE_PORT, DATABASE_USERNAME } from "./config";
+
+import { DATABASE_HOST, DATABASE_NAME, DATABASE_PASSWORD, DATABASE_PORT, DATABASE_USERNAME, DEFAULT_ADMIN_PASSWORD, DEFAULT_ADMIN_USERNAME, PASSWORD_HASH_ROUNDS } from "./config";
 
 interface MigrationRow extends RowDataPacket {
   nextMigrationId: number;
@@ -21,6 +23,24 @@ const database = createPool(databaseCredentials);
 
 export function getConnection() {
   return database.getConnection();
+}
+
+export async function initDatabaseData() {
+  const connection = await getConnection();
+  try {
+    const [ [ { user_count: userCount } ] ] = await connection.query<RowDataPacket[]>("SELECT COUNT(*) AS user_count FROM `users`");
+    if (userCount > 0) {
+      return;
+    }
+
+    // Create root user
+    const salt = await genSalt(PASSWORD_HASH_ROUNDS);
+    const passwordHash = await hash(DEFAULT_ADMIN_PASSWORD, salt);
+    await connection.query("INSERT INTO `users` (username, password_hash, is_admin) VALUES (?, ?, TRUE)", [ DEFAULT_ADMIN_USERNAME, passwordHash ]);
+    console.log(`Administrator user "${DEFAULT_ADMIN_USERNAME}" has been created with your configured password!`);
+  } finally {
+    connection.release();
+  }
 }
 
 export async function initMigrations() {

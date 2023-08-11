@@ -1,4 +1,4 @@
-export default function hasPayload(data: any, propertyDefinitions: any) {
+export function hasPayload(data: any, propertyDefinitions: any) {
   for (const propertyName in propertyDefinitions) {
     if (!(propertyName in data)) {
       return false;

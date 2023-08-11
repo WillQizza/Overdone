@@ -1,2 +1,3 @@
+export * from "./hasPayload";
+export * from "./log";
 export * from "./respondWithMessage";
-export { default as hasPayload } from "./hasPayload";
